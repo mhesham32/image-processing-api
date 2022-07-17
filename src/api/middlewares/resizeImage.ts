@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from 'express';
 import { ASSETS_PATH } from '../../Constants';
+import { getGeneratedImagePath } from '../helpers/getGeneratedImagePath';
 
 export async function resizeImage(
   req: Request,
@@ -29,14 +30,10 @@ export async function resizeImage(
       );
   }
 
-  const generatedFileName = `${fileName.replace('.jpg', '')}${
-    widthQuery ? '_W' + widthQuery.toString() : ''
-  }${heightQuery ? '_H' + heightQuery.toString() : ''}.jpg`;
-
-  const generatedFilePath = path.join(
-    ASSETS_PATH,
-    'generated',
-    generatedFileName
+  const generatedFilePath = getGeneratedImagePath(
+    widthQuery,
+    heightQuery,
+    fileName
   );
 
   // if generated file exists, use it

@@ -8,3 +8,5 @@ app.use('/api', router);
 app.listen(port, () =>
   console.log(`Image Resize app listening on port ${port}!`)
 );
+
+export default app;

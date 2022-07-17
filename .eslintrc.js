@@ -79,6 +79,8 @@ module.exports = {
     ],
   },
   plugins: ["@typescript-eslint", "prettier"],
+  // for some reason the index.spec.ts was not being compiled if I didn't add this
+  ignorePatterns: [".eslintrc.js","src/tests/index.spec.ts", "dist/*"],
   overrides: [
     {
       files: ['*.ts', '*.tsx'], // Your TypeScript files extension

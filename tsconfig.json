@@ -103,7 +103,6 @@
   "exclude": [
     "node_modules",
     "**/*.d.ts",
-    "**/*.spec.ts",
-    "spec"
+    "dist"
   ] /* Exclude type checking of files in the node_modules folder. */
 }
