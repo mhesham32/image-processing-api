@@ -57,18 +57,22 @@ describe("Testing the app functionality", () => {
       "/api/images?filename=img-1&width=100&height=100"
     );
     expect(response.status).toBe(201);
-    const generatedFilePath = getGeneratedImagePath(100, 100, "img-1.jpg");
+    const generatedFilePath = getGeneratedImagePath({
+      width: 100,
+      height: 100,
+      fileName: "img-1.jpg",
+    });
     generatedImages.push(generatedFilePath);
-    // check if the generated file exists
-    expect(fs.existsSync(generatedFilePath)).toBe(true);
   });
 
   it("should resize the image even if one diemension was provided", async () => {
     const response = await request.get("/api/images?filename=img-1&width=100");
     expect(response.status).toBe(201);
-    const generatedFilePath = getGeneratedImagePath(100, 0, "img-1.jpg");
+    const generatedFilePath = getGeneratedImagePath({
+      width: 100,
+      height: 0,
+      fileName: "img-1.jpg",
+    });
     generatedImages.push(generatedFilePath);
-    // check if the generated file exists
-    expect(fs.existsSync(generatedFilePath)).toBe(true);
   });
 });

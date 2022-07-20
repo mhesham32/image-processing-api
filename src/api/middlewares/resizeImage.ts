@@ -1,9 +1,9 @@
-import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from 'express';
 import { ASSETS_PATH } from '../../Constants';
 import { getGeneratedImagePath } from '../helpers/getGeneratedImagePath';
+import { resizeImageFn } from '../helpers/resizeImageFn';
 
 export async function resizeImage(
   req: Request,
@@ -30,11 +30,11 @@ export async function resizeImage(
       );
   }
 
-  const generatedFilePath = getGeneratedImagePath(
-    widthQuery,
-    heightQuery,
-    fileName
-  );
+  const generatedFilePath = getGeneratedImagePath({
+    width: widthQuery,
+    height: heightQuery,
+    fileName,
+  });
 
   // if generated file exists, use it
   if (fs.existsSync(generatedFilePath)) {
@@ -44,32 +44,17 @@ export async function resizeImage(
 
   // check if file exists
   if (fs.existsSync(filePath)) {
-    console.log('resizing image');
-    // get the image size
-    const image = sharp(filePath);
-    let width: number;
-    let height: number;
-    const metadata = await image.metadata();
-    width = metadata.width as number;
-    height = metadata.height as number;
-    // check the width and height from the request
-    if (widthQuery) {
-      width = widthQuery;
-    }
-    if (heightQuery) {
-      height = heightQuery;
-    }
-    // resize image
-    const buff = await sharp(filePath).resize(width, height).toBuffer();
-
-    // save the image
-    fs.writeFile(generatedFilePath, buff, (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send('Error while saving the image');
-      }
+    try {
+      await resizeImageFn({
+        imagePath: filePath,
+        width: widthQuery,
+        height: heightQuery,
+      });
       next();
-    });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
   } else {
     res.status(404).send('No file Found!');
   }

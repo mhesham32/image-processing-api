@@ -16,11 +16,11 @@ imagesRouter.get('/', checkFile, resizeImage, async (req, res) => {
     heightQuery = parseInt(req.query.height);
   }
 
-  const generatedImagePath = getGeneratedImagePath(
-    widthQuery,
-    heightQuery,
-    req.query.filename as string
-  );
+  const generatedImagePath = getGeneratedImagePath({
+    width: widthQuery,
+    height: heightQuery,
+    fileName: req.query.filename as string,
+  });
 
   const generatedImage = await fs.readFile(generatedImagePath);
   res.setHeader('Content-Type', 'image/jpeg');
