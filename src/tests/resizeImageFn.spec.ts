@@ -15,17 +15,19 @@ describe('resizeImageFn', () => {
     await fs.unlink(generatedImagePath);
   });
 
-  it('should throw an error', () => {
+  it('should throw an error', async () => {
     const imagePath = path.join(ASSETS_PATH, 'default', 'test.jpg');
     const width = 100;
     const height = 100;
-    expect(
-      resizeImageFn({
+    try {
+      await resizeImageFn({
         imagePath,
         width,
         height,
-      })
-    ).toThrowError();
+      });
+    } catch (err) {
+      expect(err).toBeDefined();
+    }
   });
 
   it('should resize an existing Image', async () => {
