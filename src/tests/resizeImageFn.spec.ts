@@ -1,7 +1,3 @@
-// write unit tests for the resizeImageFn function
-// Language: typescript
-// Path: src\api\helpers\resizeImageFn.spec.ts
-
 import { resizeImageFn } from '../api/helpers/resizeImageFn';
 import { ASSETS_PATH } from '../Constants';
 import { getGeneratedImagePath } from '../api/helpers/getGeneratedImagePath';
@@ -19,19 +15,17 @@ describe('resizeImageFn', () => {
     await fs.unlink(generatedImagePath);
   });
 
-  it('should throw an error', async () => {
+  it('should throw an error', () => {
     const imagePath = path.join(ASSETS_PATH, 'default', 'test.jpg');
     const width = 100;
     const height = 100;
-    try {
-      const promise = await resizeImageFn({
+    expect(
+      resizeImageFn({
         imagePath,
         width,
         height,
-      });
-    } catch (err) {
-      expect(err).toBeDefined();
-    }
+      })
+    ).toThrowError();
   });
 
   it('should resize an existing Image', async () => {
