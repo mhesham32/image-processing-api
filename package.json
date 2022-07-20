@@ -7,7 +7,9 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "yarn build && node dist/index.js",
-    "test": "yarn build && jasmine"
+    "test": "yarn build && jasmine",
+    "//": "linting includes formatting with prettier as well",
+    "lint": "eslint src/**/*.ts"
   },
   "keywords": [],
   "author": "",

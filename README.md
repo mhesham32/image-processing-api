@@ -21,6 +21,10 @@ if you want to run on dev mode: `yarn dev`
 
 you can test the app with `yarn test`
 
+# linting the code
+
+you can lint the code with `yarn lint` this will also format the code with prettier
+
 # using the app in the browser
 
 you can run the app in the browser with `yarn start` then open the browser and go to http://localhost:3000/api/images
