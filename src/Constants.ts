@@ -1,1 +1,1 @@
-export const ASSETS_PATH = process.cwd() + '/src/assets/';
+export const ASSETS_PATH = process.cwd() + '/assets/';
