@@ -30,6 +30,10 @@ export async function resizeImage(
       );
   }
 
+  if (isNaN(+widthQuery) || isNaN(+heightQuery)) {
+    return res.status(400).send('Please provide a valid width and/or height');
+  }
+
   const generatedFilePath = getGeneratedImagePath({
     width: widthQuery,
     height: heightQuery,
